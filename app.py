@@ -21,7 +21,7 @@ client = SecretClient(vault_url=KV_URI, credential=credential)
 APP_ID = client.get_secret("Bot-App-Id-new").value
 APP_PASSWORD = client.get_secret("Bot-App-Password-new").value
 DATABRICKS_TOKEN = client.get_secret("Databricks-Token").value
-
+print(f"APPPPPPIDDDDDD!!!!!!!!!: {APP_ID}")
 # -------------------- Bot Framework Setup --------------------
 settings = BotFrameworkAdapterSettings(app_id=APP_ID, app_password=APP_PASSWORD)
 adapter = BotFrameworkAdapter(settings)
@@ -73,5 +73,5 @@ async def query_llama3_model(user_input):
         return "Error calling the model"
     
 # Required for aiohttp.web startup
-def init_func(argv=None):
+async def init_func(argv=None):
     return app
