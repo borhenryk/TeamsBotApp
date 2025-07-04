@@ -70,4 +70,8 @@ async def query_llama3_model(user_input):
     if response.status_code == 200:
         return response.json()["choices"][0]["message"]["content"]
     else:
-        return "Error calling the model" 
+        return "Error calling the model"
+    
+# Required for aiohttp.web startup
+def init_func():
+    return app
