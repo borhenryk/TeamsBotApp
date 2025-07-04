@@ -18,8 +18,8 @@ credential = DefaultAzureCredential()
 client = SecretClient(vault_url=KV_URI, credential=credential)
 
 # Fetch secrets by name
-APP_ID = client.get_secret("Bot-App-Id").value
-APP_PASSWORD = client.get_secret("Bot-App-Password").value
+APP_ID = client.get_secret("Bot-App-Id-new").value
+APP_PASSWORD = client.get_secret("Bot-App-Password-new").value
 DATABRICKS_TOKEN = client.get_secret("Databricks-Token").value
 
 # -------------------- Bot Framework Setup --------------------
