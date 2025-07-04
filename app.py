@@ -5,14 +5,28 @@ from botbuilder.core import BotFrameworkAdapter, TurnContext, BotFrameworkAdapte
 from botbuilder.schema import Activity, ActivityTypes
 from aiohttp import web
 import aiohttp
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 
-# Initialize the bot adapter Hardcoded credentials, USE KEY VAULT
-settings = BotFrameworkAdapterSettings(app_id="x", app_password="x")
+# -------------------- Load Secrets from Azure Key Vault --------------------
+# Set the vault name as an environment variable or replace directly here
+KEY_VAULT_NAME = os.getenv("KEY_VAULT_NAME", "kvhenryk")
+KV_URI = f"https://{KEY_VAULT_NAME}.vault.azure.net"
+
+# Use Azure Managed Identity / Environment credentials
+credential = DefaultAzureCredential()
+client = SecretClient(vault_url=KV_URI, credential=credential)
+
+# Fetch secrets by name
+APP_ID = client.get_secret("Bot-App-Id").value
+APP_PASSWORD = client.get_secret("Bot-App-Password").value
+DATABRICKS_TOKEN = client.get_secret("Databricks-Token").value
+
+# -------------------- Bot Framework Setup --------------------
+settings = BotFrameworkAdapterSettings(app_id=APP_ID, app_password=APP_PASSWORD)
 adapter = BotFrameworkAdapter(settings)
 
-# Hardcoded Token, USE KEY VAULT
-DATABRICKS_TOKEN = "x"
-
+# -------------------- API Endpoint --------------------
 async def messages(req: web.Request) -> web.Response:
     body = await req.json()
     activity = Activity().deserialize(body)
@@ -39,7 +53,7 @@ if __name__ == "__main__":
     web.run_app(app, host=host, port=port)
 
 async def query_llama3_model(user_input):
-    url = "https://x"
+    url = "https://dbc-e629cdfb-2b4a.cloud.databricks.com/serving-endpoints/agents_main-rag_chatbot-basic_rag_demo/invocations"
     headers = {
         "Authorization": f"Bearer {DATABRICKS_TOKEN}",
         "Content-Type": "application/json"
