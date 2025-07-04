@@ -73,5 +73,5 @@ async def query_llama3_model(user_input):
         return "Error calling the model"
     
 # Required for aiohttp.web startup
-def init_func():
+def init_func(argv=None):
     return app
