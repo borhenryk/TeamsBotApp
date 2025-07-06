@@ -10,7 +10,7 @@ from azure.keyvault.secrets import SecretClient
 
 # -------------------- Load Secrets from Azure Key Vault --------------------
 # Set the vault name as an environment variable or replace directly here
-KEY_VAULT_NAME = os.getenv("KEY_VAULT_NAME", "kvhenryk")
+KEY_VAULT_NAME = os.getenv("KEY_VAULT_NAME", "key-vault-henryk-msteams")
 KV_URI = f"https://{KEY_VAULT_NAME}.vault.azure.net"
 
 # Use Azure Managed Identity / Environment credentials
@@ -21,7 +21,7 @@ client = SecretClient(vault_url=KV_URI, credential=credential)
 APP_ID = client.get_secret("Bot-App-Id-new").value
 APP_PASSWORD = client.get_secret("Bot-App-Password-new").value
 DATABRICKS_TOKEN = client.get_secret("Databricks-Token").value
-print(f"APPPPPPIDDDDDD!!!!!!!!!: {APP_ID}")
+
 # -------------------- Bot Framework Setup --------------------
 settings = BotFrameworkAdapterSettings(app_id=APP_ID, app_password=APP_PASSWORD)
 adapter = BotFrameworkAdapter(settings)
