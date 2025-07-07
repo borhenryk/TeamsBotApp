@@ -10,7 +10,7 @@ from azure.keyvault.secrets import SecretClient
 
 # -------------------- Load Secrets from Azure Key Vault --------------------
 # Set the vault name as an environment variable or replace directly here
-KEY_VAULT_NAME = os.getenv("KEY_VAULT_NAME", "key-vault-henryk-msteams")
+KEY_VAULT_NAME = "key-vault-henryk-msteams"
 KV_URI = f"https://{KEY_VAULT_NAME}.vault.azure.net"
 
 # Use Azure Managed Identity / Environment credentials
