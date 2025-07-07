@@ -53,7 +53,7 @@ if __name__ == "__main__":
     web.run_app(app, host=host, port=port)
 
 async def query_llama3_model(user_input):
-    url = "https://dbc-e629cdfb-2b4a.cloud.databricks.com/serving-endpoints/agents_main-rag_chatbot-basic_rag_demo/invocations"
+    url = "https://dbc-ebdf4a90-e4b6.cloud.databricks.com/serving-endpoints/agents_workspace-rag_chatbot-basic_rag_demo/invocations"
     headers = {
         "Authorization": f"Bearer {DATABRICKS_TOKEN}",
         "Content-Type": "application/json"
