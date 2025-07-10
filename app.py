@@ -35,9 +35,9 @@ async def messages(req: web.Request) -> web.Response:
     async def turn_handler(turn_context: TurnContext):
         if activity.type == ActivityTypes.message:
             try:
-                response = await query_llama3_model(turn_context.activity.text)
+                response = await query_model(turn_context.activity.text)
             except Exception as e:
-                logging.error(f"Error in query_llama3_model: {e}")
+                logging.error(f"Error in query_model: {e}")
                 response = "Error querying the model."
             await turn_context.send_activity(Activity(type=ActivityTypes.message, text=response))
     
@@ -52,8 +52,8 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 3978))
     web.run_app(app, host=host, port=port)
 
-async def query_llama3_model(user_input):
-    url = "https://e2-demo-field-eng.cloud.databricks.com/serving-endpoints/agents_dbdemos_henryk-rag_chatbot-basic_rag_demo/invocations"
+async def query_model(user_input):
+    url = "https://adb-984752964297111.11.azuredatabricks.net/serving-endpoints/Timo_Lackmann_rag/invocations"
     headers = {
         "Authorization": f"Bearer {DATABRICKS_TOKEN}",
         "Content-Type": "application/json"
